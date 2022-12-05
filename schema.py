@@ -1,6 +1,8 @@
 import psycopg
 from dataclasses import dataclass
 from flask_login import UserMixin
+from psycopg.rows import class_row
+
 CONN_STRING = 'host=plop.inf.udec.cl port=5432 dbname=bdi2022bl user=bdi2022bl password=bdi2022bl'
 
 
@@ -32,8 +34,65 @@ class PerfilUsuario(UserMixin):
     
     def get_id(self):
         return self.username
-    
-    
+
+
+@dataclass(frozen=True)
+class TarjetaUsuario:
+    username: str
+    nombre: str
+    apellido: str
+    ocupacion: str
+    n_avistamientos: int
+
+
+def obtener_todas_las_tarjetas_usuarios():
+    query = """
+    SELECT DISTINCT
+        usr.username AS "username",
+        usr.nombre_usuar AS "nombre",
+        usr.apellido AS "apellido",
+        usr.ocupacion AS "ocupacion",
+        avistamientos_por_usuario.cuenta AS "n_avistamientos"
+    FROM aves.usuario AS usr, (
+    SELECT 
+        username,
+        count(id_avistamiento) AS cuenta 
+        FROM aves.hecho_por 
+        GROUP BY username
+    ) as avistamientos_por_usuario
+    WHERE avistamientos_por_usuario.username = usr.username;
+    """
+
+    tarjetas_usuario = (psycopg.connect(conninfo=CONN_STRING, row_factory=class_row(TarjetaUsuario))
+                        .execute(query).fetchall())
+
+    return tarjetas_usuario
+
+
+def obtener_todas_las_tarjetas_aves():
+    query = """
+    SELECT 
+        ave.especie as "especie",
+        ave.nombre as "nombre",
+        sujeto.dir_foto AS "foto",
+        avistamientos_por_ave.cuenta AS "n_avistamientos"
+    FROM aves.ave as ave, aves.sujeto as sujeto, (
+    SELECT
+        especie,
+        count(id_avistamiento) AS cuenta 
+        FROM aves.avistado 
+        GROUP BY especie
+    ) AS avistamientos_por_ave
+    WHERE ave.especie = sujeto.especie
+    AND avistamientos_por_ave.especie = ave.especie;
+    """
+
+    tarjetas_ave = (psycopg.connect(conninfo=CONN_STRING, row_factory=class_row(TarjetaUsuario))
+                    .execute(query).fetchall())
+
+    return tarjetas_ave
+
+
 def obtener_todas_las_fotos_de_aves():
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
