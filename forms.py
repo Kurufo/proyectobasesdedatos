@@ -18,17 +18,17 @@ class RegistrationForm(FlaskForm):
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     nombre = StringField('Nombre', validators=[DataRequired()])
     apellido = StringField('Apellido', validators=[DataRequired()])
-    fecha_nacimiento = DateField('Fecha de Nacimiento', format='%d/%m/%Y', validators=[Optional()])
+    fecha_nacimiento = DateField('Fecha de Nacimiento', format='%d-%m-%Y')
     ocupacion = StringField('Ocupación', validators=[DataRequired()])
     nacionalidad = StringField('Nacionalidad', validators=[DataRequired()])
     submit = SubmitField('Register')
 
-    def validate_username(self, username):
-        user = obtener_perfil_usuario(username.data)
+    #def validate_username(self, username):
+    #    user = obtener_perfil_usuario(username.data)
         
-        #Tengo que revisar esto pa la validacion del username
-        if user is not None:
-            raise ValidationError('Please use a different username.')
+    #    #Tengo que revisar esto pa la validacion del username
+    #    if user is not None:
+    #        raise ValidationError('Please use a different username.')
 
     #Hay que hacer algo parecido, pero pa filtrar emails
     #def validate_email(self, email):

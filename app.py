@@ -21,7 +21,6 @@ def load_user(id):
     return obtener_perfil_usuario(id)
 
 
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -85,7 +84,7 @@ def ave(ave):
 
 
 @app.route("/new_sighting")
-@login_required
+#@login_required
 def new_sighting():
     form = SightingForm()
     if form.validate_on_submit():
@@ -94,7 +93,7 @@ def new_sighting():
         ingresar_avistamiento(iden=idav, estado=form.estado.data, nido=form.nido.data, sexo=form.sexo.data, estado_cons=form.estado_cons.data)
         #asignar_avistamiento_usuario(username=current_user.username, avistamiento=avistamiento.id)
         return redirect(url_for('index'))
-    return render_template('avistamiento.html', title='Register', form=form)
+    return render_template('hacer_avist.html', title='Register', form=form)
 
 @app.route('/logout')
 def logout():

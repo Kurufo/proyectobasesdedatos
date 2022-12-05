@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.nombre.label }}<br>
+            {{ form.nombre(size=32) }}<br>
+            {% for error in form.nombre.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.especie.label }}<br>
+            {{ form.especie(size=64) }}<br>
+            {% for error in form.especie.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.orden.label }}<br>
+            {{ form.orden(size=32) }}<br>
+            {% for error in form.orden.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.familia.label }}<br>
+            {{ form.familia(size=32) }}<br>
+            {% for error in form.familia.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.ubicacion.label }}<br>
+            {{ form.ubicacion(size=32) }}<br>
+            {% for error in form.ubicacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.fecha_hora.label }}<br>
+            {{ form.fecha_hora(size=32) }}<br>
+            {% for error in form.fecha_hora.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<!--- COMPORTAMIENTO --->
+
+<p>
+            {{ form.alimentacion.label }}<br>
+            {{ form.alimentacion(size=32) }}<br>
+            {% for error in form.alimentacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.noct_diur.label }}<br>
+            {{ form.noct_diur(size=32) }}<br>
+            {% for error in form.noct_diur.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.migra.label }}<br>
+            {{ form.migra }}<br>
+            {% for error in form.migra.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.obs_ad.label }}<br>
+            {{ form.obs_ad(size=500) }}<br>
+            {% for error in form.obs_ad.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<!--- APARIENCIA --->
+
+<p>
+            {{ form.tamano.label }}<br>
+            {{ form.tamano(size=32) }}<br>
+            {% for error in form.tamano.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.color.label }}<br>
+            {{ form.color(size=32) }}<br>
+            {% for error in form.color %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.tipo_de_pata.label }}<br>
+            {{ form.tipo_de_pata(size=32)}}<br>
+            {% for error in form.tipo_de_pata.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.tipo_de_pico.label }}<br>
+            {{ form.tipo_de_pico(size=32)}}<br>
+            {% for error in form.tipo_de_pico.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.obs_ad.label }}<br>
+            {{ form.obs_ad(size=500) }}<br>
+            {% for error in form.obs_ad.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
