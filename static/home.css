@@ -1,0 +1,119 @@
+h1 {
+  font-family: 'Croissant One', cursive;
+}
+.menu{
+  font-family: 'Croissant One', cursive;
+  border: 2px solid;
+  border-left: none;
+  border-right: none;
+
+  display: flex;
+}
+.menu{ justify-content: space-around}
+.Encabezado{
+  display:flex;
+}
+.Encabezado{
+ justify-content:center;
+  align-content:center;
+  margin-top:60px;
+  margin-bottom:60px;
+}
+.imagenGarza{
+  display:flex;
+  width:150px;
+  height:150px;
+  border-radius:75px;
+  margin-right:25px;
+}
+.tituloImagen{
+  display:flex;
+  flex-direction: column;
+  font-family:"Itim",cursive;
+}
+
+@import "compass/css3";
+.barrabusqueda-wrapper {
+  max-width: 75%;
+	overflow: hidden;
+	background: transparent;
+	position: static;
+  margin-top:70px;
+  margin-left:230px;
+}
+
+.barrabusqueda-forma {
+	overflow: hidden;
+	position: relative;
+}
+
+.flexsearch--input-wrapper {
+	padding: 0 66px 0 0;
+	overflow: hidden;
+}
+
+.flexsearch--input {
+  width: 100%;
+}
+
+.flexsearch {
+  padding: 0 25px 0 200px;
+}
+
+.flexsearch--input {
+  -webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+ 	height: 60px;
+  padding: 0 46px 0 10px;
+	border-color: #888;
+  border-radius: 25px;
+  border-style: solid;
+	border-width: 2px;
+  margin-top: 15px;
+  color: #333;
+  font-family: 'Itim', cursive;
+	font-size: 25px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+.flexsearch--submit {
+  position: absolute;
+	right: 0;
+	top: 0;
+	display: block;
+	width: 60px;
+	height: 60px;
+  padding: 0;
+  border: none;
+	margin-top: 20px;
+  margin-right: 5px;
+	background: transparent;
+  color: #888;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 40px;
+  line-height: 60px;
+}
+
+.flexsearch--input:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.flexsearch--input:focus.flexsearch--submit {
+ 	color: #333;
+}
+
+.flexsearch--submit:hover {
+  color: #333;
+  cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+	color: #888;
+}
+
+input:-moz-placeholder {
+  color: #888
+}

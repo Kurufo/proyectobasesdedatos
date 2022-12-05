@@ -1,0 +1,33 @@
+h1 {
+  font-family: 'Croissant One', cursive;
+}
+.menu{
+  font-family: 'Croissant One', cursive;
+  border: 2px solid;
+  border-left: none;
+  border-right: none;
+  border-top:none;
+
+  display: flex;
+}
+.menu{ justify-content: space-around}
+
+.Usuario{
+  margin-left: 100px;
+  display:flex;
+  align-items:center;
+}
+.imagen{
+  width:70px;
+  height:70px;
+  margin-right:20px;
+}
+h3{
+  font-family: 'Croissant One', cursive;
+  margin-bottom:3px;
+}
+h4{
+  margin-bottom:5px;
+  margin-top:5px;
+  font-family:'Itim',cursive;
+}
