@@ -50,6 +50,21 @@ def obtener_todas_las_fotos_de_aves():
     return fotos_de_aves
 
 
+
+def obtener_id_avist():
+    with psycopg.connect(conninfo=CONN_STRING) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+                SELECT MAX(id_avistamiento)
+                FROM aves.avistamiento;
+            """)
+
+            avist = cursor.fetchall()
+
+        connection.commit()
+        print(int(avist[0][0]))
+        return int(avist[0][0])
+
 def obtener_informacion_ave(especie: str):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
@@ -183,6 +198,14 @@ def comprobar_usuario(username:str):
             return False
     
     
+def hecho_por(username: str, idav: int):
+    with psycopg.connect(conninfo=CONN_STRING) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"""
+            INSERT INTO aves.hecho_por VALUES ('{username}',{idav})   
+            """)
+
+    
 def ingresar_usuario(username: str, contrasena: str, nombre: str, apellido: str, fecha_nacimiento: str, ocupacion: str, nacionalidad: str, email: str):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
@@ -264,7 +287,7 @@ def ingresar_avistamiento(iden:int, estado:str,nido:bool,sexo:str,estado_cons:st
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
             cursor.execute(f"""
-            INSERT INTO aves.avistamiento VALUES ({iden},'{estado}','{nido}','{sexo}',0,'{estado_cons}')   
+            INSERT INTO aves.avistamiento VALUES ({iden},'{estado}','{nido}','{sexo}',FALSE,'{estado_cons}')   
             """)
 
 #def ingresar_comp_obs():

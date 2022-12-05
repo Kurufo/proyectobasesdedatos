@@ -6,7 +6,7 @@ from forms import LoginForm, RegistrationForm, SightingForm
 #from flask_migrate import Migrate
 #from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_user,logout_user,LoginManager,login_required
-from schema import PerfilUsuario,comprobar_usuario,obtener_perfil_usuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario
+from schema import PerfilUsuario,comprobar_usuario,obtener_perfil_usuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario,obtener_id_avist,hecho_por
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -24,18 +24,25 @@ def load_user(iden):
 @app.route('/')
 @app.route('/index')
 def index():
-    user={'username': 'Kurufo'}
+    user={'username': 'Udwe'}
     posts = [
         {
-            'author': {'username': 'Aracena'},
-            'body': 'Te falta agregar más páginas a tu tesis Víctor'
-        },
-        {
-            'author': {'username': 'Víctor'},
-            'body': 'No joda profe'
+            'author': {'username': 'Udwe'},
+            'body': 'Pantalla inicial'
         }
     ]
     return render_template('index3.html', title='Home', user=user,  posts=posts)
+
+@app.route('/home')
+@login_required
+def home():
+    posts = [
+        {
+            'author': {'username': 'Kurufo'},
+            'body': 'Pantalla de inicio luego de logearse'
+        }
+    ]
+    return render_template('index4.html', title='Home', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -52,7 +59,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('home')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
@@ -83,16 +90,15 @@ def ave(ave):
     return render_template('index3.html', title='Home', user=user, posts=posts)
 
 
-@app.route("/new_sighting")
-#@login_required
+@app.route("/new_sighting", methods=['GET', 'POST'])
+@login_required
 def new_sighting():
     form = SightingForm()
     if form.validate_on_submit():
-        #Acá falta agregar la id del avistamiento
-        idav=0
-        ingresar_avistamiento(iden=idav, estado=form.estado.data, nido=form.nido.data, sexo=form.sexo.data, estado_cons=form.estado_cons.data)
-        #asignar_avistamiento_usuario(username=current_user.username, avistamiento=avistamiento.id)
-        return redirect(url_for('index'))
+        idav=obtener_id_avist() + 1
+        ingresar_avistamiento(iden=idav, estado=form.estado.data , nido=form.nido.data, sexo=form.sexo.data, estado_cons='bien conservado')
+        hecho_por(username=current_user.username, idav=idav)
+        return redirect(url_for('home'))
     return render_template('hacer_avist.html', title='Register', form=form)
 
 @app.route('/logout')
@@ -103,7 +109,7 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         if comprobar_usuario(form.username.data):
