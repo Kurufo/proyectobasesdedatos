@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, DateTimeField,SearchField, FieldList
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
 from schema import PerfilUsuario, obtener_perfil_usuario
 
@@ -42,14 +42,24 @@ class SightingForm(FlaskForm):
     orden = StringField('Orden', validators=[DataRequired()])
     familia = StringField('Familia', validators=[DataRequired()])
     ubicacion = StringField('Ubicación',validators=[DataRequired()])
-    fecha_hora = DateField('Fecha y hora', format='%d/%m/%Y', validators=[Optional()])   
-    ocupacion = StringField('Ocupación', validators=[DataRequired()])
-    nacionalidad = StringField('Nacionalidad', validators=[DataRequired()])
+    fecha_hora = DateTimeField('Fecha y hora', format='%d/%m/%Y%H/%M/', validators=[DataRequired()])   
+    
+    #Comportamiento
+    alimentacion = StringField('Alimentación', validators=[Optional()])
+    noct_diur= StringField('Nocturno/Diurno', validators=[Optional()])
+    nido = BooleanField('Nidificación', validators=[DataRequired()])
+    migra=BooleanField('Migración', validators=[DataRequired()])
+    obs_ad = StringField('Observaciones adicionales', validators=[Optional()])
+    
+    #Apariencia
+    
+    tamano=StringField('Tamaño', validators=[Optional()])
+    color=FieldList(StringField('Color', validators=[Optional()]))
+    tipo_de_pata=StringField('Tipo de patas', validators=[Optional()])
+    tipo_de_pico=StringField('Tipo de pico', validators=[Optional()])
+    tipo_de_ala=StringField('Tipo de alas', validators=[Optional()])
+    obser_adic=StringField('Observaciones adicionales', validators=[Optional()])
+    #foto
+    
     submit = SubmitField('Register')
 
-    def validate_username(self, username):
-        user = obtener_perfil_usuario(username.data)
-        
-        #Tengo que revisar esto pa la validacion del username
-        if user is not None:
-            raise ValidationError('Please use a different username.')
