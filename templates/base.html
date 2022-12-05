@@ -1,0 +1,39 @@
+<html>
+<link href='https://fonts.googleapis.com/css?family=Caveat' rel='stylesheet'> 
+   <head>
+
+ <img src="https://static.wikia.nocookie.net/yugioh/images/5/59/TheWingedDragonofRa-TF06-JP-VG.png" alt="Dragon Alado de Ra" width="140" height="140" style=float:left>
+<h1 style="font-family:Caveat;font-size:700%;text-align:center;">Aves de Chile</h1> 
+        {% if title %}
+        <title>{{ title }} - Aves de Chile</title>
+        {% else %}
+        <title>Aves de Chile</title>
+        {% endif %}
+    </head>
+    <body>
+       <div>
+<hr>
+        <a href="{{ url_for('index') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Home</a>
+       {% if current_user.is_anonymous %}
+        <a href="{{ url_for('login') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Login</a>
+        {% else %}
+        <a href="{{ url_for('logout') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Logout</a>
+        <a href="{{ url_for('user', username=current_user.username) }}" style="font-family:Caveat;font-size:300%;" margin=50px>Perfil</a>
+        {% endif %}
+        <a href="{{ url_for('aves') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Aves</a>
+        <a href="{{ url_for('users') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Usuarios</a>
+<hr>
+    </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
