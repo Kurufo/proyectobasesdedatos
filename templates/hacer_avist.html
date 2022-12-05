@@ -1,154 +1,191 @@
-
 {% extends "base.html" %}
 
 {% block content %}
     <h1>Register</h1>
     <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.nombre.label }}<br>
-            {{ form.nombre(size=32) }}<br>
+        {{ form.hidden_tag() }}      
+<table style='width:90%'>
+<tr>
+            <th>{{ form.nombre.label }}</th> 
+ <th>{{ form.especie.label }}</th>
+</tr>
+<tr>
+</tr>
+<tr>
+            <th>{{ form.nombre(size=32) }}
             {% for error in form.nombre.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.especie.label }}<br>
-            {{ form.especie(size=64) }}<br>
+            {% endfor %}</th>
+<th> {{ form.especie(size=64) }}
             {% for error in form.especie.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.estado.label }}<br>
-            {{ form.estado}}<br>
-            {% for error in form.estado.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.familia.label }}<br>
-            {{ form.familia(size=32) }}<br>
+            {% endfor %} </th>
+        </tr>
+<tr>
+</tr>
+        <tr>
+            <th>{{ form.familia.label }}</th>
+<th>{{ form.estado.label }}</th>
+<th> {{ form.sexo.label }}</th>
+</tr>
+<tr>
+<tr>
+</tr>
+<th>{{ form.familia(size=32) }}
             {% for error in form.familia.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.sexo.label }}<br>
-            {{ form.sexo}}<br>
+            {% endfor %}</th>
+
+            <th>{{ form.estado}}
+            {% for error in form.estado.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
+
+           <th> {{ form.sexo}}
             {% for error in form.sexo.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
-<p>
-            {{ form.ubicacion.label }}<br>
-            {{ form.ubicacion}}<br>
-            {% for error in form.ubicacion.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-{{ form.tipo_ubicacion.label }}<br>
-            {{ form.tipo_ubicacion}}<br>
-            {% for error in form.tipo_ubicacion.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-        </p>
-<p>
-            {{ form.fecha_hora.label }}<br>
-            {{ form.fecha_hora(size=32) }}<br>
+        </tr>
+<tr>
+</tr>
+<tr>
+   <th>         {{ form.fecha_hora.label }} </th>
+<th>{{ form.ubicacion.label }}</th>
+<th>{{ form.tipo_ubicacion.label }}</th>
+</tr>
+<tr>
+</tr>
+<tr>
+   <th>         {{ form.fecha_hora(size=32) }}
             {% for error in form.fecha_hora.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            {% endfor %} </th>
+
+            <th> {{ form.ubicacion}}
+            {% for error in form.ubicacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
+
+<th>
+            {{ form.tipo_ubicacion}}
+            {% for error in form.tipo_ubicacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
+        </tr>
 
 <!--- COMPORTAMIENTO --->
-
-<p>
-            {{ form.alimentacion.label }}<br>
-            {{ form.alimentacion}}<br>
+<tr>
+</tr>
+<tr>
+            <th>{{ form.alimentacion.label }}</th>
+<th> {{ form.noct_diur.label }}</th>
+<th>{{ form.migra.label }}</th>
+</tr>
+<tr>
+</tr>
+<tr>
+           <th> {{ form.alimentacion}}
             {% for error in form.alimentacion.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-<p>
-            {{ form.noct_diur.label }}<br>
-            {{ form.noct_diur }}<br>
+            {% endfor %}</th>
+
+           
+       <th>      {{ form.noct_diur }}
             {% for error in form.noct_diur.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-<p>
-            {{ form.nido.label }}<br>
-            {{ form.nido }}<br>
-            {% for error in form.nido.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            {% endfor %}  </th>
 
-<p>
-            {{ form.migra.label }}<br>
-            {{ form.migra }}<br>
+<th>{{ form.migra }}
             {% for error in form.migra.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-<p>
-            {{ form.obs_ad.label }}<br>
-            {{ form.obs_ad(size=500) }}<br>
-            {% for error in form.obs_ad.errors %}
+            {% endfor %} </th>
+</tr>
+<tr>
+</tr>
+<tr>
+           <th> {{ form.nido.label }}</th>
+{% if form.nido.is_validated %}
+<th> {{ form.tipo_nido.label }}</th>
+{% endif %}
+</tr>
+<tr>
+</tr>
+<tr>
+            <th>{{ form.nido }}
+            {% for error in form.nido.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            {% endfor %}</th>
+<th>{{ form.tipo_nido }}
+            {% for error in form.tipo_nido.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
+</tr>
+ <tr>
+
+
 
 <!--- APARIENCIA --->
-
-<p>
-            {{ form.tamano.label }}<br>
-            {{ form.tamano }}<br>
+</tr>
+<tr>
+            <th>{{ form.tamano.label }}</th>
+<th>{{ form.tipo_de_pata.label }}</th>
+<th>{{ form.tipo_de_pico.label }}</th>
+</tr>
+<tr>
+</tr>
+<tr>
+           <th> {{ form.tamano }}
             {% for error in form.tamano.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-<p>
-            {{ form.color.label }}<br>
-            {{ form.color(size=32) }}<br>
-            {% for error in form.color.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-<p>
-            {{ form.tipo_de_pata.label }}<br>
-            {{ form.tipo_de_pata}}<br>
+            {% endfor %}</th>
+
+<th> {{ form.tipo_de_pata}}
             {% for error in form.tipo_de_pata.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            {% endfor %} </th>
 
-<p>
-            {{ form.tipo_de_pico.label }}<br>
-            {{ form.tipo_de_pico}}<br>
+<th>{{ form.tipo_de_pico}}
             {% for error in form.tipo_de_pico.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            {% endfor %} </th>
 
-<p>
-            {{ form.obs_ad.label }}<br>
-            {{ form.obs_ad(size=500) }}<br>
+</tr>
+<tr>
+</tr>
+<tr>
+            <th>{{ form.color.label }}</th>
+</tr>
+<tr>
+</tr>
+<tr>
+            <th>{{ form.color }}
+            {% for error in form.color.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
+
+</tr>  
+<tr>
+</tr>
+<tr>
+            <th>{{ form.obser_adic.label }}</th>
+<th>{{ form.obs_ad.label }}</th>
+</tr>
+<tr>
+</tr>
+<tr>
+            <th>{{ form.obser_adic(rows=5,col=50) }}
+            {% for error in form.obser_adic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
+<th>{{ form.obs_ad(rows=5, col=50) }}
             {% for error in form.obs_ad.errors %}
             <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+            {% endfor %}</th>
+</tr>
+        </table>
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
-
-
-
-
-
 
 
 
