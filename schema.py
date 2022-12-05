@@ -44,14 +44,71 @@ class TarjetaUsuario:
     ocupacion: str
     n_avistamientos: int
 
+@dataclass(frozen=True)
+class TarjetaUsuario:
+    username: str
+    nombre: str
+    apellido: str
+    ocupacion: str
+    n_avistamientos: int
+
+
+class TarjetaAvistamientoDeAve():
+    dir_foto: str
+    nombre_ave: str
+    especie_ave: str
+    fecha_y_hora: str
+    nombre_ubicacion: str
+    region_ubicacion: str
+
+
+def obtener_todos_los_avistamientos_de_un_ave(especie_ave: str):
+    query = """
+    SELECT foto_ave.dir_foto as "dir_foto",
+       ave.nombre as "nombre_ave",
+       ave.especie as "especie_ave",
+       fecha_y_hora.fecha_hora as "fecha_y_hora",
+       ubicacion.nombre as "nombre_ubicacion",
+       ubicacion.region as "region_ubicacion"
+    FROM aves.avistamiento as avistamiento,
+
+         aves.avistado as avistado,
+         aves.ave as ave,
+
+         aves.visto_en as visto_en,
+         aves.ubicacion as ubicacion,
+
+         aves.cuando as cuando,
+         aves.fecha_y_hora as fecha_y_hora,
+         aves.avistado_en as avistado_en,
+         aves.foto_ave as foto_ave
+    WHERE avistamiento.id_avistamiento = avistado.id_avistamiento
+      AND avistado.especie = ave.especie
+
+      AND avistamiento.id_avistamiento = visto_en.id_avistamiento
+      AND visto_en.nombre = ubicacion.nombre
+
+      AND avistamiento.id_avistamiento = cuando.id_avistamiento
+      AND cuando.fecha_hora = fecha_y_hora.fecha_hora
+
+      AND avistamiento.id_avistamiento = avistado_en.id_avistamiento
+      AND avistado_en.dir_foto = foto_ave.dir_foto
+      
+      AND ave.especie = '%s';
+    """
+
+    avistamientos = (psycopg.connect(conninfo=CONN_STRING, row_factory=class_row(TarjetaAvistamientoDeAve))
+                        .execute(query).fetchall(), especie_ave)
+
+    return avistamientos
+
 
 def obtener_todas_las_tarjetas_usuarios():
     query = """
     SELECT DISTINCT
         usr.username AS "username",
         usr.nombre_usuar AS "nombre",
-        usr.apellido AS "apellido",
-        usr.ocupacion AS "ocupacion",
+        usr.apellido AS "apellido", usr.ocupacion AS "ocupacion",
         avistamientos_por_usuario.cuenta AS "n_avistamientos"
     FROM aves.usuario AS usr, (
     SELECT 
