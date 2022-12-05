@@ -31,39 +31,172 @@ def load_user(id):
 
 
 
-#### Base html
-       <div>
-<hr>
-        <a href="{{ url_for('index') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Home</a>
-       {% if current_user.is_anonymous %}
-        <a href="{{ url_for('login') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Login</a>
-        {% else %}
-        <a href="{{ url_for('logout') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Logout</a>
-        <a href="{{ url_for('user', username=current_user.username) }}" style="font-family:Caveat;font-size:300%;" margin=50px>Perfil</a>
-        {% endif %}
-        <a href="{{ url_for('ave') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Aves</a>
-        <a href="{{ url_for('user') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Usuarios</a>
-<hr>
-    </div>
     
-### forms .py
+    
+    
+    
+    
+    
+    
+    
+    
+    
+###########################################
 
-class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    nombre = StringField('Nombre', validators=[DataRequired()])
-    apellido = StringField('Apellido', validators=[DataRequired()])
-    fecha_nacimiento = DateField('Fecha de Nacimiento', format='%d/%m/%Y', validators=[Optional()])
-    ocupacion = StringField('Ocupación', validators=[DataRequired()])
-    nacionalidad = StringField('Nacionalidad', validators=[DataRequired()])
-    submit = SubmitField('Register')
 
-    def validate_username(self, username):
-        user = obtener_perfil_usuario(username.data)
-        
-        #Tengo que revisar esto pa la validacion del username
-        if user is not None:
-            raise ValidationError('Please use a different username.')
+
+
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}      
+<p>
+            {{ form.nombre.label }} <br>
+            {{ form.nombre(size=32) }}<br>
+            {% for error in form.nombre.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.especie.label }}<br>
+            {{ form.especie(size=64) }}<br>
+            {% for error in form.especie.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.estado.label }}<br>
+            {{ form.estado}}<br>
+            {% for error in form.estado.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.familia.label }}<br>
+            {{ form.familia(size=32) }}<br>
+            {% for error in form.familia.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.sexo.label }}<br>
+            {{ form.sexo}}<br>
+            {% for error in form.sexo.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.ubicacion.label }}<br>
+            {{ form.ubicacion}}<br>
+            {% for error in form.ubicacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+</p>
+<p>
+{{ form.tipo_ubicacion.label }}<br>
+            {{ form.tipo_ubicacion}}<br>
+            {% for error in form.tipo_ubicacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
+        </p>
+<p>
+            {{ form.fecha_hora.label }}<br>
+            {{ form.fecha_hora(size=32) }}<br>
+            {% for error in form.fecha_hora.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<!--- COMPORTAMIENTO --->
+
+<p>
+            {{ form.alimentacion.label }}<br>
+            {{ form.alimentacion}}<br>
+            {% for error in form.alimentacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.noct_diur.label }}<br>
+            {{ form.noct_diur }}<br>
+            {% for error in form.noct_diur.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.nido.label }}<br>
+            {{ form.nido }}<br>
+            {% for error in form.nido.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.migra.label }}<br>
+            {{ form.migra }}<br>
+            {% for error in form.migra.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.obs_ad.label }}<br>
+            {{ form.obs_ad(size=500) }}<br>
+            {% for error in form.obs_ad.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<!--- APARIENCIA --->
+
+<p>
+            {{ form.tamano.label }}<br>
+            {{ form.tamano }}<br>
+            {% for error in form.tamano.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.color.label }}<br>
+            {{ form.color(size=32) }}<br>
+            {% for error in form.color.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+<p>
+            {{ form.tipo_de_pata.label }}<br>
+            {{ form.tipo_de_pata}}<br>
+            {% for error in form.tipo_de_pata.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.tipo_de_pico.label }}<br>
+            {{ form.tipo_de_pico}}<br>
+            {% for error in form.tipo_de_pico.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+<p>
+            {{ form.obs_ad.label }}<br>
+            {{ form.obs_ad(size=500) }}<br>
+            {% for error in form.obs_ad.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
+
+
+
+
+
+
+
+
