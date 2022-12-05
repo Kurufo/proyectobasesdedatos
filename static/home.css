@@ -1,6 +1,15 @@
 h1 {
   font-family: 'Croissant One', cursive;
 }
+h3 {
+font-family:'Croissant One',cursive;
+}
+
+.cuadroUsuario{
+ display:flex;
+ justify-content:flex-end;
+ margin-right:30px;
+}
 .menu{
   font-family: 'Croissant One', cursive;
   border: 2px solid;

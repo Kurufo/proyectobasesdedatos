@@ -11,8 +11,17 @@
 
     <title> Avistamientos de Aves de Chile</title>
 </head>
-
 <body>
+  <div class="cuadroUsuario">
+      <h3>Iniciar Sesión</h3>
+          {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login') }}" >Iniciar Sesión</a>
+    {% else %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('user', username=current_user.username) }}" style="font-family:Caveat;font-size:300%;"
+       margin=50px>Perfil</a>
+    {% endif %}
+  </div>
 <div class="Encabezado">
     <figure>
         <a href="https://freeimage.host/i/HCIf0YP"><img src="https://iili.io/HCIf0YP.md.jpg" alt="HCIf0YP.md.jpg"
@@ -30,16 +39,10 @@
 </div>
 
 <div class="menu">
-    <a href="{{ url_for('index') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Home</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Login</a>
-    {% else %}
-    <a href="{{ url_for('logout') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Logout</a>
-    <a href="{{ url_for('user', username=current_user.username) }}" style="font-family:Caveat;font-size:300%;"
-       margin=50px>Perfil</a>
-    {% endif %}
-    <a href="{{ url_for('aves') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Aves</a>
-    <a href="{{ url_for('users') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Usuarios</a>
+    <a href="{{ url_for('index') }}" >Inicio</a>
+    <a href="{{ url_for('aves') }}">Aves</a>
+    <a href="{{ url_for('aves') }}">Avistamientos</a>
+    <a href="{{ url_for('users') }}">Usuarios</a>
 </div>
 </body>
 
@@ -47,7 +50,7 @@
     <div class="barrabusqueda-wrapper">
         <form class="barrabusqueda-forma" action="#" method="post">
             <div class="flexsearch--input-wrapper">
-                <input class="flexsearch--input" type="search" placeholder="búsqueda">
+                <input class="flexsearch--input" type="search" placeholder="Búsqueda">
             </div>
             <input class="flexsearch--submit" type="submit" value="&#10140;"/>
         </form>
