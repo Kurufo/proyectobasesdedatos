@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -19,9 +20,9 @@
             {% endfor %}
         </p>
         <p>
-            {{ form.orden.label }}<br>
-            {{ form.orden(size=32) }}<br>
-            {% for error in form.orden.errors %}
+            {{ form.estado.label }}<br>
+            {{ form.estado}}<br>
+            {% for error in form.estado.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
@@ -32,12 +33,26 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+        <p>
+            {{ form.sexo.label }}<br>
+            {{ form.sexo}}<br>
+            {% for error in form.sexo.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
 <p>
             {{ form.ubicacion.label }}<br>
-            {{ form.ubicacion(size=32) }}<br>
+            {{ form.ubicacion}}<br>
             {% for error in form.ubicacion.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
+
+{{ form.tipo_ubicacion.label }}<br>
+            {{ form.tipo_ubicacion}}<br>
+            {% for error in form.tipo_ubicacion.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+
         </p>
 <p>
             {{ form.fecha_hora.label }}<br>
@@ -51,18 +66,26 @@
 
 <p>
             {{ form.alimentacion.label }}<br>
-            {{ form.alimentacion(size=32) }}<br>
+            {{ form.alimentacion}}<br>
             {% for error in form.alimentacion.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
 <p>
             {{ form.noct_diur.label }}<br>
-            {{ form.noct_diur(size=32) }}<br>
+            {{ form.noct_diur }}<br>
             {% for error in form.noct_diur.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
+<p>
+            {{ form.nido.label }}<br>
+            {{ form.nido }}<br>
+            {% for error in form.nido.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
 <p>
             {{ form.migra.label }}<br>
             {{ form.migra }}<br>
@@ -83,7 +106,7 @@
 
 <p>
             {{ form.tamano.label }}<br>
-            {{ form.tamano(size=32) }}<br>
+            {{ form.tamano }}<br>
             {% for error in form.tamano.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -91,13 +114,13 @@
 <p>
             {{ form.color.label }}<br>
             {{ form.color(size=32) }}<br>
-            {% for error in form.color %}
+            {% for error in form.color.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
 <p>
             {{ form.tipo_de_pata.label }}<br>
-            {{ form.tipo_de_pata(size=32)}}<br>
+            {{ form.tipo_de_pata}}<br>
             {% for error in form.tipo_de_pata.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -105,7 +128,7 @@
 
 <p>
             {{ form.tipo_de_pico.label }}<br>
-            {{ form.tipo_de_pico(size=32)}}<br>
+            {{ form.tipo_de_pico}}<br>
             {% for error in form.tipo_de_pico.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -121,3 +144,11 @@
         <p>{{ form.submit() }}</p>
     </form>
 {% endblock %}
+
+
+
+
+
+
+
+
