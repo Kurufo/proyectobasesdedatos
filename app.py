@@ -90,8 +90,8 @@ def new_sighting():
     form = SightingForm()
     if form.validate_on_submit():
         #Acá falta agregar la id del avistamiento
-        ingresar_avistamiento(username=current_user.username, contrasena=form.password.data, nombre=form.nombre.data, apellido=form.apellido.data, fecha_nacimiento=form.fecha_nacimiento.data,ocupacion=form.ocupacion.data,nacionalidad=form.nacionalidad.data , email=form.email.data)
-
+        idav=0
+        ingresar_avistamiento(iden=idav, estado=form.estado.data, nido=form.nido.data, sexo=form.sexo.data, estado_cons=form.estado_cons.data)
         #asignar_avistamiento_usuario(username=current_user.username, avistamiento=avistamiento.id)
         return redirect(url_for('index'))
     return render_template('avistamiento.html', title='Register', form=form)
