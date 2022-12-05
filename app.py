@@ -6,7 +6,7 @@ from forms import LoginForm, RegistrationForm, SightingForm
 #from flask_migrate import Migrate
 #from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_user,logout_user,LoginManager,login_required
-from schema import PerfilUsuario,comprobar_usuario,obtener_perfil_usuario,IngresoUsuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario
+from schema import PerfilUsuario,comprobar_usuario,obtener_perfil_usuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -17,8 +17,8 @@ login.login_view = 'login'
 #En el render_template hay que actualizar las templates correspondientes
 
 @login.user_loader
-def load_user(id):
-    return obtener_perfil_usuario(id)
+def load_user(iden):
+    return obtener_perfil_usuario(iden)
 
 
 @app.route('/')

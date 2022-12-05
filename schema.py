@@ -1,6 +1,6 @@
 import psycopg
 from dataclasses import dataclass
-
+from flask_login import UserMixin
 CONN_STRING = 'host=plop.inf.udec.cl port=5432 dbname=bdi2022bl user=bdi2022bl password=bdi2022bl'
 
 
@@ -19,8 +19,9 @@ class PerfilAve:
 
 
 @dataclass(frozen=True)
-class PerfilUsuario:
+class PerfilUsuario(UserMixin):
     username: str
+    contrasena: str
     nombre: str
     apellido: str
     fecha_nacimiento: str
@@ -29,13 +30,9 @@ class PerfilUsuario:
     email: str
     dir_foto: str
     
-
-@dataclass(frozen=True)
-class IngresoUsuario:
-    username: str
-    contrasena: str
+    def get_id(self):
+        return self.username
     
-
     
 def obtener_todas_las_fotos_de_aves():
     with psycopg.connect(conninfo=CONN_STRING) as connection:
@@ -93,7 +90,14 @@ def obtener_ingreso_usuario(username: str):
             cursor.execute(f"""
             SELECT (
                 u.username,
-                u.contrasena
+                u.contrasena,
+                u.nombre_usuar,
+                u.apellido,
+                u.fecha_nacimiento,
+                u.ocupacion,
+                u.nacionalidad,
+                u.email,
+                u.dir_foto_usr
             )
             FROM aves.usuario as u
             WHERE u.username='{username}'
@@ -108,7 +112,7 @@ def obtener_ingreso_usuario(username: str):
 
             connection.commit()
 
-            return IngresoUsuario(*perfil_usuario_tupla)
+            return PerfilUsuario(*perfil_usuario_tupla)
 
 def obtener_perfil_usuario(username: str):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
@@ -116,6 +120,7 @@ def obtener_perfil_usuario(username: str):
             cursor.execute(f"""
             SELECT (
                 u.username,
+                u.contrasena,
                 u.nombre_usuar,
                 u.apellido,
                 u.fecha_nacimiento,
