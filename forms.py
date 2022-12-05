@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, DateTimeField,SearchField, FieldList
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
-from schema import PerfilUsuario, obtener_perfil_usuario
+from schema import PerfilUsuario, obtener_perfil_usuario,comprobar_usuario
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -25,12 +25,12 @@ class RegistrationForm(FlaskForm):
 
 #Revisar validación del username, agrega datos bien a la base de datos exceptuando si hay duplicados
 
-    #def validate_username(self, username):
-    #    user = obtener_perfil_usuario(username.data)
+    def validate_username(self, username):
+        user = comprobar_usuario(username.data)
         
     #    #Tengo que revisar esto pa la validacion del username
-    #    if user is not None:
-    #        raise ValidationError('Please use a different username.')
+        if user:
+            raise ValidationError('Please use a different username.')
 
     #Hay que hacer algo parecido, pero pa filtrar emails
     #def validate_email(self, email):

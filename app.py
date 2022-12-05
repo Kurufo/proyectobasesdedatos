@@ -6,7 +6,7 @@ from forms import LoginForm, RegistrationForm, SightingForm
 #from flask_migrate import Migrate
 #from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_user,logout_user,LoginManager,login_required
-from schema import PerfilUsuario,obtener_perfil_usuario,IngresoUsuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario
+from schema import PerfilUsuario,comprobar_usuario,obtener_perfil_usuario,IngresoUsuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -106,9 +106,10 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        ingresar_usuario(username=form.username.data, contrasena=form.password.data, nombre=form.nombre.data, apellido=form.apellido.data, fecha_nacimiento=form.fecha_nacimiento.data,ocupacion=form.ocupacion.data,nacionalidad=form.nacionalidad.data , email=form.email.data)
-        flash('Usuario registrado con éxito')
-        return redirect(url_for('login'))
+        if comprobar_usuario(form.username.data):
+            ingresar_usuario(username=form.username.data, contrasena=form.password.data, nombre=form.nombre.data, apellido=form.apellido.data, fecha_nacimiento=form.fecha_nacimiento.data,ocupacion=form.ocupacion.data,nacionalidad=form.nacionalidad.data , email=form.email.data)
+            flash('Usuario registrado con éxito')
+            return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route("/users")

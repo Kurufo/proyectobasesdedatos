@@ -152,6 +152,32 @@ class NuevoUsuario:
     dir_foto: str
     
     
+def comprobar_usuario(username:str):
+    with psycopg.connect(conninfo=CONN_STRING) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute(f"""
+            SELECT (
+                u.username
+            )
+            FROM aves.usuario as u
+            WHERE u.username='{username}'
+            """)
+
+            perfil_usuario_tupla = cursor.fetchall()
+
+            try:
+                perfil_usuario_tupla = perfil_usuario_tupla[0][0]
+            except IndexError:
+                connection.commit()
+
+                return True
+                
+
+            connection.commit()
+
+            return False
+    
+    
 def ingresar_usuario(username: str, contrasena: str, nombre: str, apellido: str, fecha_nacimiento: str, ocupacion: str, nacionalidad: str, email: str):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
