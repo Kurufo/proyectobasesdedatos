@@ -1,18 +1,34 @@
 <html>
-<link href='https://fonts.googleapis.com/css?family=Caveat' rel='stylesheet'>
 <head>
-    <img src="https://static.wikia.nocookie.net/yugioh/images/5/59/TheWingedDragonofRa-TF06-JP-VG.png"
-         alt="Dragon Alado de Ra" width="140" height="140" style=float:left>
-    <h1 style="font-family:Caveat;font-size:700%;text-align:center;">Aves de Chile</h1>
-    {% if title %}
-    <title>{{ title }} - Aves de Chile</title>
-    {% else %}
-    <title>Aves de Chile</title>
-    {% endif %}
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='home.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&display=swap" rel="stylesheet">
+
+    <title> Avistamientos de Aves de Chile</title>
 </head>
+
 <body>
-<div>
-    <hr>
+<div class="Encabezado">
+    <figure>
+        <a href="https://freeimage.host/i/HCIf0YP"><img src="https://iili.io/HCIf0YP.md.jpg" alt="HCIf0YP.md.jpg"
+                                                        class="imagenGarza"></a>
+        <div style="text-align:center">
+            <figcaption class="tituloImagen"> Garcita Blanca
+                <br><em>Egretta thula</em></br>
+            </figcaption>
+        </div>
+    </figure>
+    <h1 style="text-align:center">
+        Avistamientos de<br>Aves de Chile
+    </h1>
+</div>
+
+<div class="menu">
     <a href="{{ url_for('index') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Home</a>
     {% if current_user.is_anonymous %}
     <a href="{{ url_for('login') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Login</a>
@@ -23,18 +39,8 @@
     {% endif %}
     <a href="{{ url_for('aves') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Aves</a>
     <a href="{{ url_for('users') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Usuarios</a>
-    <hr>
+<a href="{{ url_for('new_sighting') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Nuevo Avistamiento</a>
 </div>
-<hr>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-<ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
 {% block content %}{% endblock %}
 </body>
 </html>
