@@ -46,7 +46,8 @@ class SightingForm(FlaskForm):
     sexo=SelectField('Sexo',choices=[('macho','macho'),('hembra','hembra')],validators=[DataRequired()])
     estado = SelectField('Vive?',choices=[('vivo','si'),('muerto','no')], validators=[DataRequired()])
     familia = StringField('Familia', validators=[DataRequired()])
-    ubicacion = SelectField('Ubicación',choices=[('Arica-Parinacota','Arica-Parinacota'),
+    nombre_ubic= StringField('Ubicación', validators=[DataRequired()])
+    ubicacion = SelectField('Región',choices=[('Arica-Parinacota','Arica-Parinacota'),
                                                  ('Tarapacá','Tarapacá'),
                                                  ('Antofagasta','Antofagasta'),
                                                  ('Atacama','Atacama'),
