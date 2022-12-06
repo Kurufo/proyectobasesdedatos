@@ -29,7 +29,7 @@ class RegistrationForm(FlaskForm):
         user = comprobar_usuario(username.data)
         
     #    #Tengo que revisar esto pa la validacion del username
-        if user:
+        if not user:
             raise ValidationError('Please use a different username.')
 
     #Hay que hacer algo parecido, pero pa filtrar emails
