@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table>
+        <tr valign="top">
+            <td><img src="{{ ave.foto}}"></td>
+            <td><h1>Nombre: {{ ave.nombre }}</h1></td>
+<td><h1>Especie: {{ave.especie}}</h1></td>
+            <td><h1>Familia: {{ ave.familia }}</h1></td>
+            <td><h1>Orden: {{ ave.orden }}</h1></td>
+            <td><h1>Hábitat: {{ave.habitat}}</h1></td>
+        </tr>
+    </table>
+{% endblock %}
