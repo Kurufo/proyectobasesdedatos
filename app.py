@@ -9,7 +9,7 @@ from flask_login import current_user, login_user,logout_user,LoginManager,login_
 from schema import obtener_id_apar, obtener_id_comp, comprobar_usuario, obtener_perfil_usuario, obtener_ingreso_usuario, \
     ingresar_usuario, ingresar_avistamiento, asignar_avistamiento_usuario, obtener_id_avist, hecho_por, \
     ingresar_comp_obs, ingresar_apar_obs, avistamiento_especie, visto_en, que_hacia, como_lucia, se_encuentra_en, \
-    cuando, eliminar_usuario
+    cuando, eliminar_usuario,obtener_perfil_ave
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -69,18 +69,9 @@ def aves():
 
 @app.route("/ave/<ave>")
 def ave(ave):
-    user = {'username': 'ave'}
-    posts = [
-        {
-            'author': {'username': 'Aracena'},
-            'body': 'Te falta agregar más páginas a tu tesis Víctor'
-        },
-        {
-            'author': {'username': 'Víctor'},
-            'body': 'No joda profe'
-        }
-    ]
-    return render_template('index3.html', title='Home', user=user, posts=posts)
+    avep = obtener_perfil_ave(ave)
+        
+    return render_template('ave.html', title='Home', ave=avep)
 
 
 @app.route("/new_sighting", methods=['GET', 'POST'])
