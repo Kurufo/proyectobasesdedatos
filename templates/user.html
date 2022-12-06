@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% block content %}
     <table>
         <tr valign="top">
@@ -11,15 +12,35 @@
             <td><h1>E-mail: {{ user.email }}</h1></td>
         </tr>
     </table>
-    <hr>
-
-    <form method="post">
+{% if  current_user.is_anonymous%}
+{%else%}
+{% if current_user.username==user.username%}
+<form method="post">
         <input type="submit" value="Eliminar Cuenta" name="eliminar_cuenta"/>
     </form>
-
-    {% for post in posts %}
-    <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
-    </p>
+{%endif%}
+{%endif%}
+    <hr>
+<table>
+<tr valign="top">
+<td><h1> Especie </h1></td>
+            <td><h1> Estado</h1></td>
+<td><h1> Nido</h1></td>
+            <td><h1>Sexo</h1></td>
+            <td><h1>Estado de conservación</h1></td>
+            <td><h1>Fecha</h1></td>
+ <td><h1>Ubicación</h1></td>
+</tr>
+    {% for ave in posts %}
+  <tr>  
+            <td><h1> {{ ave.especie }}</h1></td>
+            <td><h1> {{ ave.estado }}</h1></td>
+<td><h1> {{ave.nido}}</h1></td>
+            <td><h1>{{ ave.sexo }}</h1></td>
+            <td><h1>{{ ave.estado_conservacion }}</h1></td>
+            <td><h1>{{ave.fecha_y_hora}}</h1></td>
+ <td><h1>{{ave.ubicacion}}</h1></td>
+        </tr>
     {% endfor %}
+</table>
 {% endblock %}
