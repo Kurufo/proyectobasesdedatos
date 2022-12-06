@@ -85,15 +85,15 @@ class SightingForm(FlaskForm):
                                                             ('diurno - crepuscular','diurno - crepuscular'),
                                                             ('crepuscular - nocturno','crepuscular - nocturno')], validators=[Optional()])
     nido = BooleanField('Presencia de nido', validators=[Optional()])
-    tipo_nido=SelectField('Tipo del nido',choices=[('escarbado','escarbado'),
-                                                            ('montículo','montículo'),
+    tipo_nido=SelectField('Tipo del nido',choices=[("", "---"),('escarbado','escarbado'),
+                                                            ('monticulo','montículo'),
                                                             ('madriguera','madriguera'),
                                                             ('cavidad','cavidad'),
                                                             ('cuenco','cuenco'),
                                                             ('plato','plato'),
                                                             ('plataforma','plataforma'),
                                                             ('colgante','colgante'),
-                                                            ('esférico','esférico')], validators=[Optional()])
+                                                            ('esferico','esférico')], validators=[Optional()])
 
     migra=BooleanField('Migración', validators=[Optional()])
     obs_ad = TextAreaField('Observaciones respecto al comportamiento', validators=[Optional()])
@@ -115,7 +115,7 @@ class SightingForm(FlaskForm):
                                                             ('cafe','café'),
                                                             ('ocre','ocre'),
                                                             ('rojo','rojo'),
-                                                            ('castaño','castaño'),
+                                                            ('castano','castaño'),
                                                             ('verde','verde'),
                                                             ('azul','azul'),
                                                             ('amarillo','amarillo'),
@@ -146,7 +146,7 @@ class SightingForm(FlaskForm):
                                                             ('pescador grueso','pescador grueso'),
                                                             ('pescador ganchudo','pescador ganchudo'),
                                                             ('buceador','buceador'),
-                                                            ('carroñero','carroñero'),
+                                                            ('carronero','carroñero'),
                                                             ('ave de presa','ave de presa'),
                                                             ('plano','plano'),
                                                             ('plano c/caruncula','plano c/caruncula')], validators=[Optional()])
