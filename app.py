@@ -6,7 +6,7 @@ from forms import LoginForm, RegistrationForm, SightingForm
 #from flask_migrate import Migrate
 #from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_user,logout_user,LoginManager,login_required
-from schema import PerfilUsuario,comprobar_usuario,obtener_perfil_usuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario,obtener_id_avist,hecho_por
+from schema import obtener_id_apar,obtener_id_comp,comprobar_usuario,obtener_perfil_usuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario,obtener_id_avist,hecho_por, ingresar_comp_obs,ingresar_apar_obs,avistamiento_especie,visto_en,que_hacia,como_lucia,se_encuentra_en,cuando
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -33,16 +33,6 @@ def index():
     ]
     return render_template('index3.html', title='Home', user=user,  posts=posts)
 
-@app.route('/home')
-@login_required
-def home():
-    posts = [
-        {
-            'author': {'username': 'Kurufo'},
-            'body': 'Pantalla de inicio luego de logearse'
-        }
-    ]
-    return render_template('index4.html', title='Home', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -59,7 +49,7 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('home')
+            next_page = url_for('index3')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
@@ -98,7 +88,17 @@ def new_sighting():
         idav=obtener_id_avist() + 1
         ingresar_avistamiento(iden=idav, estado=form.estado.data , nido=form.nido.data, sexo=form.sexo.data, estado_cons='bien conservado')
         hecho_por(username=current_user.username, idav=idav)
-        return redirect(url_for('home'))
+        avistamiento_especie(especie=form.especie.data,  avistamiento=idav)
+        cuando(fecha=form.fecha_hora.data,avistamiento=idav)
+        idap=obtener_id_apar()
+        idco=obtener_id_comp()
+        ingresar_apar_obs(iden=idap, tamano=form.tamano.data, alas=form.tipo_de_ala.data, pico=form.tipo_de_pico.data, patas=form.tipo_de_pata.data, obs_ad=form.obser_adic.data)
+        ingresar_comp_obs(iden=idco, alimentacion=form.alimentacion.data, nidificacion=form.tipo_nido.data, migracion=form.migra.data, cronotipo=form.cronotipo.data, obs_ad=form.obs_ad.data)
+        que_hacia(idav,idap)
+        como_lucia(avistamiento=idav, id_ap=idap)
+        visto_en(ubicacion=form.nombre_ubic.data, tipo_localidad=form.tipo_ubicacion.data, region=form.ubicacion.data, avistamiento=idav)
+        
+        return redirect(url_for('index3'))
     return render_template('hacer_avist.html', title='Register', form=form)
 
 @app.route('/logout')
@@ -131,6 +131,7 @@ def users():
 
 @app.route('/user/<username>')
 def user(username):
+    
     user = obtener_perfil_usuario(username)
     posts = [
         {'author': user, 'body': 'Test post #1'},

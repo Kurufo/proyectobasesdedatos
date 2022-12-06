@@ -50,6 +50,7 @@
 </tr>
 <tr>
    <th>         {{ form.fecha_hora.label }} </th>
+<th>         {{ form.nombre_ubic.label }} </th>
 <th>{{ form.ubicacion.label }}</th>
 <th>{{ form.tipo_ubicacion.label }}</th>
 </tr>
@@ -60,6 +61,11 @@
             {% for error in form.fecha_hora.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %} </th>
+
+<th> {{ form.nombre_ubic}}
+            {% for error in form.nombre_ubic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}</th>
 
             <th> {{ form.ubicacion}}
             {% for error in form.ubicacion.errors %}
