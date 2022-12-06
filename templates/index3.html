@@ -11,8 +11,16 @@
 
     <title> Avistamientos de Aves de Chile</title>
 </head>
-
 <body>
+  <div class="cuadroUsuario">
+      {% if current_user.is_anonymous %}
+    <a href="{{ url_for('login') }}" style="font-family:'Croissant One';font-size:100%;">Iniciar Sesión</a>
+    {% else %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('user', username=current_user.username) }}" style="font-family:'Croissant One';font-size:100%;"
+       margin=50px>Perfil</a>
+    {% endif %}
+  </div>
 <div class="Encabezado">
     <figure>
         <a href="https://freeimage.host/i/HCIf0YP"><img src="https://iili.io/HCIf0YP.md.jpg" alt="HCIf0YP.md.jpg"
@@ -29,17 +37,10 @@
 </div>
 
 <div class="menu">
-    <a href="{{ url_for('index') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Home</a>
-    {% if current_user.is_anonymous %}
-    <a href="{{ url_for('login') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Login</a>
-    {% else %}
-    <a href="{{ url_for('logout') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Logout</a>
-    <a href="{{ url_for('user', username=current_user.username) }}" style="font-family:Caveat;font-size:300%;"
-       margin=50px>Perfil</a>
-    {% endif %}
-    <a href="{{ url_for('aves') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Aves</a>
-    <a href="{{ url_for('users') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Usuarios</a>
-<a href="{{ url_for('new_sighting') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Nuevo Avistamiento</a>
+    <a href="{{ url_for('index') }}" style="font-size:300%;">Inicio</a>
+    <a href="{{ url_for('aves') }}" style="font-size:300%;">Aves</a>
+    <a href="{{ url_for('aves') }}" style="font-size:300%;">Avistamientos</a>
+    <a href="{{ url_for('users') }}" style="font-size:300%;">Usuarios</a>
 </div>
 </body>
 
