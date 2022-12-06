@@ -1,6 +1,8 @@
 import psycopg
 from dataclasses import dataclass
 from flask_login import UserMixin
+from psycopg.rows import class_row
+
 CONN_STRING = 'host=plop.inf.udec.cl port=5432 dbname=bdi2022bl user=bdi2022bl password=bdi2022bl'
 
 
@@ -33,6 +35,7 @@ class PerfilUsuario(UserMixin):
     def get_id(self):
         return self.username
 
+
 @dataclass(frozen=True)
 class TarjetaUsuario:
     username: str
@@ -57,6 +60,7 @@ class TarjetaAvistamientoDeAve():
     fecha_y_hora: str
     nombre_ubicacion: str
     region_ubicacion: str
+
 
 def obtener_todos_los_avistamientos():
     query = """
@@ -372,7 +376,6 @@ def comprobar_usuario(username:str):
 
             return False
 
-    
     
 def hecho_por(username: str, idav: int):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
