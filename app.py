@@ -84,15 +84,15 @@ def new_sighting():
         hecho_por(username=current_user.username, idav=idav)
         avistamiento_especie(especie=form.especie.data,  avistamiento=idav)
         cuando(fecha=form.fecha_hora.data,avistamiento=idav)
-        idap=obtener_id_apar()
-        idco=obtener_id_comp()
+        idap=obtener_id_apar()+1
+        idco=obtener_id_comp()+1
         ingresar_apar_obs(iden=idap, tamano=form.tamano.data, alas=form.tipo_de_ala.data, pico=form.tipo_de_pico.data, patas=form.tipo_de_pata.data, obs_ad=form.obser_adic.data)
-        ingresar_comp_obs(iden=idco, alimentacion=form.alimentacion.data, nidificacion=form.tipo_nido.data, migracion=form.migra.data, cronotipo=form.cronotipo.data, obs_ad=form.obs_ad.data)
-        que_hacia(idav,idap)
+        ingresar_comp_obs(iden=idco, alimentacion=form.alimentacion.data, nidificacion=form.tipo_nido.data, migracion=form.migra.data, cronotipo=form.noct_diur.data, obs_ad=form.obs_ad.data)
+        que_hacia(idav,idco)
         como_lucia(avistamiento=idav, id_ap=idap)
         visto_en(ubicacion=form.nombre_ubic.data, tipo_localidad=form.tipo_ubicacion.data, region=form.ubicacion.data, avistamiento=idav)
         
-        return redirect(url_for('index3'))
+        return redirect(url_for('index'))
     return render_template('hacer_avist.html', title='Register', form=form)
 
 @app.route('/logout')

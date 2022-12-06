@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, PasswordField,SelectField, BooleanField, SubmitField, DateField, DateTimeField,SearchField, FieldList
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional, InputRequired
 from schema import PerfilUsuario, obtener_perfil_usuario,comprobar_usuario
 
 
@@ -41,13 +41,13 @@ class RegistrationForm(FlaskForm):
     
 
 class SightingForm(FlaskForm):
-    nombre = StringField('Nombre', validators=[DataRequired()])
-    especie = StringField('Especie', validators=[DataRequired()])
-    orden = StringField('Orden', validators=[DataRequired()])
-    sexo=SelectField('Sexo',choices=[('macho','macho'),('hembra','hembra')],validators=[DataRequired()])
-    estado = SelectField('Vive?',choices=[('vivo','si'),('muerto','no')], validators=[DataRequired()])
-    familia = StringField('Familia', validators=[DataRequired()])
-    nombre_ubic= StringField('Ubicación', validators=[DataRequired()])
+    nombre = StringField('Nombre', validators=[InputRequired()])
+    especie = StringField('Especie', validators=[InputRequired()])
+    orden = StringField('Orden', validators=[InputRequired()])
+    sexo=SelectField('Sexo',choices=[('macho','macho'),('hembra','hembra')],validators=[InputRequired()])
+    estado = SelectField('Vive?',choices=[('vivo','si'),('muerto','no')], validators=[InputRequired()])
+    familia = StringField('Familia', validators=[InputRequired()])
+    nombre_ubic= StringField('Ubicación', validators=[InputRequired()])
     ubicacion = SelectField('Región',choices=[('Arica-Parinacota','Arica-Parinacota'),
                                                  ('Tarapacá','Tarapacá'),
                                                  ('Antofagasta','Antofagasta'),
@@ -63,28 +63,27 @@ class SightingForm(FlaskForm):
                                                  ('Los Ríos','Los Ríos'),
                                                  ('Los Lagos','Los Lagos'),
                                                  ('Aysén','Aysén'),
-                                                 ('Magallanes','Magallanes')],validators=[DataRequired()])
+                                                 ('Magallanes','Magallanes')],validators=[InputRequired()])
     tipo_ubicacion=SelectField('Tipo de ubicación',choices=[('ciudad','ciudad'),
                                                             ('villa','villa'),
                                                             ('pueblo','pueblo'),
                                                             ('rural','rural'),
                                                             ('costa','costa'),
-                                                            ('oasis','oasis')],validators=[DataRequired()])
-    fecha_hora = DateTimeField('Fecha y hora (Hora:Minuto-día/mes/año)', format='%H:%M-%d/%m/%Y', validators=[DataRequired()])   
+                                                            ('oasis','oasis')],validators=[InputRequired()])
+    fecha_hora = DateTimeField('Fecha y hora (Hora:Minuto-día/mes/año)', format='%H:%M-%d/%m/%Y', validators=[InputRequired()])   
     
     #Comportamiento
     alimentacion = SelectField('Alimentación',choices=[('carnivoro','carnivoro'),
-                                                            ('granivoro','granivoro'),
                                                             ('herbivoro','herbivoro'),
                                                             ('omnivoro','omnivoro'),
                                                             ('insectivoro','insectivoro'),
-                                                            ('nectarivoro','nectarivoro')], validators=[Optional()])
+                                                            ('nectarivoro','nectarivoro')], validators=[InputRequired()])
     noct_diur= SelectField('Cronotipo',choices=[('nocturno','nocturno'),
                                                             ('diurno','diurno'),
                                                             ('diurno - nocturno','diurno - nocturno'),
                                                             ('crepuscular','crepuscular'),
                                                             ('diurno - crepuscular','diurno - crepuscular'),
-                                                            ('crepuscular - nocturno','crepuscular - nocturno')], validators=[Optional()])
+                                                            ('crepuscular - nocturno','crepuscular - nocturno')], validators=[InputRequired()])
     nido = BooleanField('Presencia de nido', validators=[Optional()])
     tipo_nido=SelectField('Tipo del nido',choices=[("", "---"),('escarbado','escarbado'),
                                                             ('monticulo','montículo'),
@@ -94,7 +93,7 @@ class SightingForm(FlaskForm):
                                                             ('plato','plato'),
                                                             ('plataforma','plataforma'),
                                                             ('colgante','colgante'),
-                                                            ('esferico','esférico')], validators=[Optional()])
+                                                            ('esferico','esférico')], validators=[InputRequired()])
 
     migra=BooleanField('Migración', validators=[Optional()])
     obs_ad = TextAreaField('Observaciones respecto al comportamiento', validators=[Optional()])
@@ -107,7 +106,7 @@ class SightingForm(FlaskForm):
                                                             ('mediano - grande','mediano - grande'),
                                                             ('muy pequeno','muy pequeño'),
                                                             ('grande','grande'),
-                                                            ('mediano','mediano')], validators=[Optional()])
+                                                            ('mediano','mediano')], validators=[InputRequired()])
     color=SelectField('Color',choices=[('blanco','blanco'),
                                                             ('pardo','pardo'),
                                                             ('tornasol','tornasol'),
@@ -120,7 +119,7 @@ class SightingForm(FlaskForm):
                                                             ('verde','verde'),
                                                             ('azul','azul'),
                                                             ('amarillo','amarillo'),
-                                                            ('negro','negro')], validators=[Optional()])
+                                                            ('negro','negro')], validators=[InputRequired()])
     
     tipo_de_pata=SelectField('Tipo de patas', choices=[('rapaces','rapaces'),
                                                             ('paserinas','paserinas'),
@@ -133,7 +132,7 @@ class SightingForm(FlaskForm):
                                                             ('pamprodactilas','pamprodactilas'),
                                                             ('anisodactilas','anisodactilas'),
                                                             ('totipalmeadas','totipalmeadas'),
-                                                            ('lobulada','lobulada')],validators=[Optional()])
+                                                            ('lobulada','lobulada')],validators=[InputRequired()])
     tipo_de_pico=SelectField('Tipo de pico',choices=[('generalista','generalista'),
                                                             ('insectivoro','insectívoro'),
                                                             ('granivoro','granívoro'),
@@ -150,14 +149,14 @@ class SightingForm(FlaskForm):
                                                             ('carronero','carroñero'),
                                                             ('ave de presa','ave de presa'),
                                                             ('plano','plano'),
-                                                            ('plano c/caruncula','plano c/caruncula')], validators=[Optional()])
+                                                            ('plano c/caruncula','plano c/caruncula')], validators=[InputRequired()])
     tipo_de_ala=SelectField('Tipo de alas',choices=[('de planeo','de planeo'),
                                                             ('elevadoras','elevadoras'),
                                                             ('elipticas','elípticas'),
                                                             ('de alta velocidad','de alta velocidad'),
                                                             ('terrestre poco voladora','terrestre poco voladora'),
                                                             ('terrestre no voladora','terrestre no voladora'),
-                                                            ('acuatica no voladora','acuática no voladora')], validators=[Optional()])
+                                                            ('acuatica no voladora','acuática no voladora')], validators=[InputRequired()])
     obser_adic=TextAreaField('Observaciones respecto a la apariencia', validators=[Optional()])
     #foto
     
