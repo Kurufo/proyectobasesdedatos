@@ -9,7 +9,7 @@ from flask_login import current_user, login_user,logout_user,LoginManager,login_
 from schema import obtener_id_apar, obtener_id_comp, comprobar_usuario, obtener_perfil_usuario, obtener_ingreso_usuario, \
     ingresar_usuario, ingresar_avistamiento, asignar_avistamiento_usuario, obtener_id_avist, hecho_por, \
     ingresar_comp_obs, ingresar_apar_obs, avistamiento_especie, visto_en, que_hacia, como_lucia, se_encuentra_en, \
-    cuando, eliminar_usuario,obtener_perfil_ave
+    cuando, eliminar_usuario,obtener_perfil_ave,obtener_todos_los_avistamientos_de_un_usuario
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -138,10 +138,7 @@ def user(username):
         else:
             abort(400, description='Entrada inválida')
     else:
-        posts = [
-            {'author': user, 'body': 'Test post #1'},
-            {'author': user, 'body': 'Test post #2'}
-        ]
+        posts = obtener_todos_los_avistamientos_de_un_usuario(username)
 
         return render_template('user.html', user=user, posts=posts)
 

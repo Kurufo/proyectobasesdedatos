@@ -423,6 +423,7 @@ class AvistamientoUsuario:
     ubicacion: str
 
 
+
 def obtener_todos_los_avistamientos_de_un_usuario(username: str):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
@@ -433,22 +434,22 @@ def obtener_todos_los_avistamientos_de_un_usuario(username: str):
                 avistamiento.sexo,
                 avistamiento.estado_conservacion,
                 cuando.fecha_hora,
-                ave.especie,
-                ubicacion.nombre
+                avistado.especie,
+                visto_en.nombre
             ) 
-            FROM aves.avistamiento as avistamiento, aves.cuando as cuando, aves.hecho_por as hecho_por, aves.ave as ave, aves.se_encuentra_en as se_encuentra_en, aves.avistado as avistado, aves.visto_en as visto_en
+            FROM aves.avistamiento as avistamiento, aves.cuando as cuando, aves.hecho_por as hecho_por,aves.avistado as avistado, aves.visto_en as visto_en
             WHERE hecho_por.username='{username}'
             AND hecho_por.id_avistamiento = avistamiento.id_avistamiento
             AND avistamiento.id_avistamiento = cuando.id_avistamiento
-            AND avistamiento.id_avistamiento = avistado.id_avistamiento
-            AND avistado.especie=ave.especie
-            AND visto_en.id_avistamiento=id_avistamiento
-            AND ubicacion.nombre=visto_en.nombre;
+            AND avistado.id_avistamiento=avistamiento.id_avistamiento
+            AND visto_en.id_avistamiento=avistamiento.id_avistamiento
             """)
+            
 
             avistamientos_tupla = [avistamientos_tupla[0] for avistamientos_tupla in cursor.fetchall()]
 
             avistamientos = []
+            
 
             for avistamiento_tupla in avistamientos_tupla:
                 avistamientos.append(AvistamientoUsuario(
@@ -458,9 +459,9 @@ def obtener_todos_los_avistamientos_de_un_usuario(username: str):
                     estado_conservacion=avistamiento_tupla[3].capitalize(),
                     fecha_y_hora=avistamiento_tupla[4],
                     especie=avistamiento_tupla[5],
-                    ubicacion=avistamiento_tupla[6]                    
+                    ubicacion=avistamiento_tupla[6]   
                 ))
-
+                
             connection.commit()
 
             return avistamientos
@@ -634,4 +635,4 @@ def cuando(fecha: str, avistamiento:int):
 
 
 if __name__ == "__main__":
-    print(comprobar_usuario("udweneitor"))
+    obtener_todos_los_avistamientos_de_un_usuario("goldenfrog638")
