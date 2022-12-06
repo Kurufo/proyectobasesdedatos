@@ -12,6 +12,11 @@
         </tr>
     </table>
     <hr>
+
+    <form method="post">
+        <input type="submit" value="Eliminar Cuenta" name="eliminar_cuenta"/>
+    </form>
+
     {% for post in posts %}
     <p>
     {{ post.author.username }} says: <b>{{ post.body }}</b>

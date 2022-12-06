@@ -62,6 +62,15 @@ class TarjetaAvistamientoDeAve():
     region_ubicacion: str
 
 
+def eliminar_usuario(username: str):
+    query = """
+    DELETE FROM aves.usuario WHERE username = %s;
+    """
+
+    (psycopg.connect(conninfo=CONN_STRING).execute(query, (username,)).connection.commit())
+
+
+
 def obtener_todos_los_avistamientos():
     query = """
     SELECT foto_ave.dir_foto as "dir_foto",

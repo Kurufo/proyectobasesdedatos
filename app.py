@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 from flask import render_template, flash, redirect,url_for, request
 from config import Config #Se llama la def desde un archivo aparte
 from forms import LoginForm, RegistrationForm, SightingForm
@@ -6,7 +6,10 @@ from forms import LoginForm, RegistrationForm, SightingForm
 #from flask_migrate import Migrate
 #from werkzeug.security import generate_password_hash
 from flask_login import current_user, login_user,logout_user,LoginManager,login_required
-from schema import obtener_id_apar,obtener_id_comp,comprobar_usuario,obtener_perfil_usuario, obtener_ingreso_usuario, ingresar_usuario,ingresar_avistamiento,asignar_avistamiento_usuario,obtener_id_avist,hecho_por, ingresar_comp_obs,ingresar_apar_obs,avistamiento_especie,visto_en,que_hacia,como_lucia,se_encuentra_en,cuando
+from schema import obtener_id_apar, obtener_id_comp, comprobar_usuario, obtener_perfil_usuario, obtener_ingreso_usuario, \
+    ingresar_usuario, ingresar_avistamiento, asignar_avistamiento_usuario, obtener_id_avist, hecho_por, \
+    ingresar_comp_obs, ingresar_apar_obs, avistamiento_especie, visto_en, que_hacia, como_lucia, se_encuentra_en, \
+    cuando, eliminar_usuario
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -129,17 +132,29 @@ def users():
     ]
     return render_template('index3.html', title='Home', user=user, posts=posts)
 
-@app.route('/user/<username>')
+
+@app.route('/user/<username>', methods=['GET', 'POST'])
 def user(username):
-    
     user = obtener_perfil_usuario(username)
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
+
+    if request.method == "POST":
+        if 'eliminar_cuenta' in request.form:
+            eliminar_usuario(str(current_user.username))
+
+            logout_user()
+
+            return redirect(url_for('index'))
+        else:
+            abort(400, description='Entrada inválida')
+    else:
+        posts = [
+            {'author': user, 'body': 'Test post #1'},
+            {'author': user, 'body': 'Test post #2'}
+        ]
+
+        return render_template('user.html', user=user, posts=posts)
 
 
 
 if __name__ == "__main__":
-    app.run()
+   app.run()
