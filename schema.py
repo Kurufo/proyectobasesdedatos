@@ -10,6 +10,8 @@ class NoEncontradoEnLaBBDD(Exception):
     pass
 
 
+
+
 @dataclass(frozen=True)
 class PerfilAve:
     especie: str
@@ -101,26 +103,20 @@ def obtener_todos_los_avistamientos():
        ubicacion.nombre as "nombre_ubicacion",
        ubicacion.region as "region_ubicacion"
     FROM aves.avistamiento as avistamiento,
-
          aves.avistado as avistado,
          aves.ave as ave,
-
          aves.visto_en as visto_en,
          aves.ubicacion as ubicacion,
-
          aves.cuando as cuando,
          aves.fecha_y_hora as fecha_y_hora,
          aves.avistado_en as avistado_en,
          aves.foto_ave as foto_ave
     WHERE avistamiento.id_avistamiento = avistado.id_avistamiento
       AND avistado.especie = ave.especie
-
       AND avistamiento.id_avistamiento = visto_en.id_avistamiento
       AND visto_en.nombre = ubicacion.nombre
-
       AND avistamiento.id_avistamiento = cuando.id_avistamiento
       AND cuando.fecha_hora = fecha_y_hora.fecha_hora
-
       AND avistamiento.id_avistamiento = avistado_en.id_avistamiento
       AND avistado_en.dir_foto = foto_ave.dir_foto
     """
@@ -140,26 +136,20 @@ def obtener_todos_los_avistamientos_de_un_ave(especie_ave: str):
        ubicacion.nombre as "nombre_ubicacion",
        ubicacion.region as "region_ubicacion"
     FROM aves.avistamiento as avistamiento,
-
          aves.avistado as avistado,
          aves.ave as ave,
-
          aves.visto_en as visto_en,
          aves.ubicacion as ubicacion,
-
          aves.cuando as cuando,
          aves.fecha_y_hora as fecha_y_hora,
          aves.avistado_en as avistado_en,
          aves.foto_ave as foto_ave
     WHERE avistamiento.id_avistamiento = avistado.id_avistamiento
       AND avistado.especie = ave.especie
-
       AND avistamiento.id_avistamiento = visto_en.id_avistamiento
       AND visto_en.nombre = ubicacion.nombre
-
       AND avistamiento.id_avistamiento = cuando.id_avistamiento
       AND cuando.fecha_hora = fecha_y_hora.fecha_hora
-
       AND avistamiento.id_avistamiento = avistado_en.id_avistamiento
       AND avistado_en.dir_foto = foto_ave.dir_foto
       
@@ -266,7 +256,7 @@ def obtener_id_comp():
         with connection.cursor() as cursor:
             cursor.execute("""
                 SELECT MAX(id_comportamiento_obs)
-                FROM aves.comportamiento_obsrvado;
+                FROM aves.comportamiento_observado;
             """)
 
             avist = cursor.fetchall()
@@ -407,6 +397,7 @@ def comprobar_usuario(username:str):
             return False
 
     
+    
 def hecho_por(username: str, idav: int):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
@@ -416,11 +407,11 @@ def hecho_por(username: str, idav: int):
             connection.commit()
 
     
-def ingresar_usuario(username: str, contrasena: str, nombre: str, apellido: str, fecha_nacimiento: str, ocupacion: str, nacionalidad: str, email: str):
+def ingresar_usuario(username: str, contrasena: str, nombre: str, apellido: str, fecha_nacimiento: str, ocupacion: str, nacionalidad: str, email: str, dir_image='https://static.wikia.nocookie.net/yugioh/images/5/59/TheWingedDragonofRa-TF06-JP-VG.png'):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
             cursor.execute(f"""
-            INSERT INTO aves.usuario VALUES ('{username}','{contrasena}','{nombre}','{apellido}','{fecha_nacimiento}','{ocupacion}','{nacionalidad}','{email}','https://static.wikia.nocookie.net/yugioh/images/5/59/TheWingedDragonofRa-TF06-JP-VG.png')   
+            INSERT INTO aves.usuario VALUES ('{username}','{contrasena}','{nombre}','{apellido}','{fecha_nacimiento}','{ocupacion}','{nacionalidad}','{email}','{dir_image}')   
             """)
 
         
@@ -453,6 +444,7 @@ class AvistamientoUsuario:
     ubicacion: str
 
 
+
 def obtener_todos_los_avistamientos_de_un_usuario(username: str):
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
@@ -463,22 +455,22 @@ def obtener_todos_los_avistamientos_de_un_usuario(username: str):
                 avistamiento.sexo,
                 avistamiento.estado_conservacion,
                 cuando.fecha_hora,
-                ave.especie,
-                ubicacion.nombre
+                avistado.especie,
+                visto_en.nombre
             ) 
-            FROM aves.avistamiento as avistamiento, aves.cuando as cuando, aves.hecho_por as hecho_por, aves.ave as ave, aves.se_encuentra_en as se_encuentra_en, aves.avistado as avistado, aves.visto_en as visto_en
+            FROM aves.avistamiento as avistamiento, aves.cuando as cuando, aves.hecho_por as hecho_por,aves.avistado as avistado, aves.visto_en as visto_en
             WHERE hecho_por.username='{username}'
             AND hecho_por.id_avistamiento = avistamiento.id_avistamiento
             AND avistamiento.id_avistamiento = cuando.id_avistamiento
-            AND avistamiento.id_avistamiento = avistado.id_avistamiento
-            AND avistado.especie=ave.especie
-            AND visto_en.id_avistamiento=id_avistamiento
-            AND ubicacion.nombre=visto_en.nombre;
+            AND avistado.id_avistamiento=avistamiento.id_avistamiento
+            AND visto_en.id_avistamiento=avistamiento.id_avistamiento
             """)
+            
 
             avistamientos_tupla = [avistamientos_tupla[0] for avistamientos_tupla in cursor.fetchall()]
 
             avistamientos = []
+            
 
             for avistamiento_tupla in avistamientos_tupla:
                 avistamientos.append(AvistamientoUsuario(
@@ -488,9 +480,9 @@ def obtener_todos_los_avistamientos_de_un_usuario(username: str):
                     estado_conservacion=avistamiento_tupla[3].capitalize(),
                     fecha_y_hora=avistamiento_tupla[4],
                     especie=avistamiento_tupla[5],
-                    ubicacion=avistamiento_tupla[6]                    
+                    ubicacion=avistamiento_tupla[6]   
                 ))
-
+                
             connection.commit()
 
             return avistamientos
@@ -524,7 +516,7 @@ def ingresar_apar_obs(iden:str,tamano:str, alas:str, pico:str, patas:str, obs_ad
     with psycopg.connect(conninfo=CONN_STRING) as connection:
         with connection.cursor() as cursor:
             cursor.execute(f"""
-            INSERT INTO aves.apariencia_observada VALUES ({iden},'{tamano}','{alas}',{pico},'{patas}','{obs_ad}')   
+            INSERT INTO aves.apariencia_observada VALUES ({iden},'{tamano}','{alas}','{pico}','{patas}','{obs_ad}')   
             """)
             
             connection.commit()
@@ -577,7 +569,7 @@ def visto_en(ubicacion: str, tipo_localidad:str, region:str, avistamiento:int):
         with connection.cursor() as cursor:
             
             if comprobar_ubicacion(ubicacion):
-                registrar_ubicacion(ubicacion)
+                registrar_ubicacion(ubicacion,tipo_localidad,region)
                 
             cursor.execute(f"""
             INSERT INTO aves.visto_en VALUES ('{ubicacion}',{avistamiento})   
@@ -664,8 +656,4 @@ def cuando(fecha: str, avistamiento:int):
 
 
 if __name__ == "__main__":
-    print(obtener_perfil_ave('Phoebastria irrorata'))
-    print(obtener_perfil_usuario("lazyostrich760"))
-
-    for avistamiento in obtener_todos_los_avistamientos_de_un_usuario('lazyostrich760'):
-        print(avistamiento)
+    obtener_todos_los_avistamientos_de_un_usuario("goldenfrog638")

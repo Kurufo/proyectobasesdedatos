@@ -9,7 +9,7 @@ from flask_login import current_user, login_user,logout_user,LoginManager,login_
 from schema import obtener_id_apar, obtener_id_comp, comprobar_usuario, obtener_perfil_usuario, obtener_ingreso_usuario, \
     ingresar_usuario, ingresar_avistamiento, asignar_avistamiento_usuario, obtener_id_avist, hecho_por, \
     ingresar_comp_obs, ingresar_apar_obs, avistamiento_especie, visto_en, que_hacia, como_lucia, se_encuentra_en, \
-    cuando, eliminar_usuario,obtener_perfil_ave
+    cuando, eliminar_usuario,obtener_perfil_ave,obtener_todos_los_avistamientos_de_un_usuario
 from werkzeug.urls import url_parse
 
 app = Flask(__name__)
@@ -84,15 +84,15 @@ def new_sighting():
         hecho_por(username=current_user.username, idav=idav)
         avistamiento_especie(especie=form.especie.data,  avistamiento=idav)
         cuando(fecha=form.fecha_hora.data,avistamiento=idav)
-        idap=obtener_id_apar()
-        idco=obtener_id_comp()
+        idap=obtener_id_apar()+1
+        idco=obtener_id_comp()+1
         ingresar_apar_obs(iden=idap, tamano=form.tamano.data, alas=form.tipo_de_ala.data, pico=form.tipo_de_pico.data, patas=form.tipo_de_pata.data, obs_ad=form.obser_adic.data)
-        ingresar_comp_obs(iden=idco, alimentacion=form.alimentacion.data, nidificacion=form.tipo_nido.data, migracion=form.migra.data, cronotipo=form.cronotipo.data, obs_ad=form.obs_ad.data)
-        que_hacia(idav,idap)
+        ingresar_comp_obs(iden=idco, alimentacion=form.alimentacion.data, nidificacion=form.tipo_nido.data, migracion=form.migra.data, cronotipo=form.noct_diur.data, obs_ad=form.obs_ad.data)
+        que_hacia(idav,idco)
         como_lucia(avistamiento=idav, id_ap=idap)
         visto_en(ubicacion=form.nombre_ubic.data, tipo_localidad=form.tipo_ubicacion.data, region=form.ubicacion.data, avistamiento=idav)
         
-        return redirect(url_for('index3'))
+        return redirect(url_for('index'))
     return render_template('hacer_avist.html', title='Register', form=form)
 
 @app.route('/logout')
@@ -138,10 +138,7 @@ def user(username):
         else:
             abort(400, description='Entrada inválida')
     else:
-        posts = [
-            {'author': user, 'body': 'Test post #1'},
-            {'author': user, 'body': 'Test post #2'}
-        ]
+        posts = obtener_todos_los_avistamientos_de_un_usuario(username)
 
         return render_template('user.html', user=user, posts=posts)
 
