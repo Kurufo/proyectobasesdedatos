@@ -12,7 +12,7 @@
 </tr>
     {% for ave in posts %}
   <tr>  
-            <td><a href="{{ url_for('logout') }}" style="font-family:Caveat;font-size:300%;" margin=50px>Logout</a></td>
+            <td><p>{{ave.username}}</p></td>
             <td><p> {{ ave.nombre }}</p></td>
 <td><p> {{ave.apellido}}</p></td>
             <td><p>{{ ave.ocupacion }}</p></td>
