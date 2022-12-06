@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <hr>
+<table>
+<tr valign="top">
+<td><h1> Username</h1></td>
+            <td><h1> Nombre </h1></td>
+<td><h1> Apellido </h1></td>
+<td><h1> Ocupación </h1></td>
+            <td><h1>Cantidad de avistamientos </h1></td>
+</tr>
+    {% for ave in posts %}
+  <tr>  
+            <td><p > {{ave.username}}</p></td>
+            <td><p> {{ ave.nombre }}</p></td>
+<td><p> {{ave.apellido}}</p></td>
+            <td><p>{{ ave.ocupacion }}</p></td>
+            <td><p>{{ ave.n_avistamientos }}</p></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
