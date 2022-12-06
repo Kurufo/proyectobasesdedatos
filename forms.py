@@ -86,14 +86,14 @@ class SightingForm(FlaskForm):
                                                             ('crepuscular - nocturno','crepuscular - nocturno')], validators=[Optional()])
     nido = BooleanField('Presencia de nido', validators=[Optional()])
     tipo_nido=SelectField('Tipo del nido',choices=[('escarbado','escarbado'),
-                                                            ('montículo','montículo'),
+                                                            ('monticulo','montículo'),
                                                             ('madriguera','madriguera'),
                                                             ('cavidad','cavidad'),
                                                             ('cuenco','cuenco'),
                                                             ('plato','plato'),
                                                             ('plataforma','plataforma'),
                                                             ('colgante','colgante'),
-                                                            ('esférico','esférico')], validators=[Optional()])
+                                                            ('esferico','esférico')], validators=[Optional()])
 
     migra=BooleanField('Migración', validators=[Optional()])
     obs_ad = TextAreaField('Observaciones respecto al comportamiento', validators=[Optional()])
