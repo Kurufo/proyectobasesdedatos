@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='home.css') }}">
+
 {% block content %}
     <h1>Register</h1>
     <form action="" method="post">
@@ -8,6 +8,7 @@
 <tr>
             <th>{{ form.nombre.label }}</th> 
  <th>{{ form.especie.label }}</th>
+ <th>{{ form.orden.label }}</th>
 </tr>
 <tr>
 </tr>
@@ -18,6 +19,10 @@
             {% endfor %}</th>
 <th> {{ form.especie(size=64) }}
             {% for error in form.especie.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %} </th>
+<th> {{ form.orden(size=64) }}
+            {% for error in form.orden.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %} </th>
         </tr>
@@ -110,9 +115,9 @@
 </tr>
 <tr>
            <th> {{ form.nido.label }}</th>
-{% if form.nido.is_validated %}
+
 <th> {{ form.tipo_nido.label }}</th>
-{% endif %}
+
 </tr>
 <tr>
 </tr>
@@ -136,6 +141,7 @@
             <th>{{ form.tamano.label }}</th>
 <th>{{ form.tipo_de_pata.label }}</th>
 <th>{{ form.tipo_de_pico.label }}</th>
+<th>{{ form.tipo_de_ala.label }}</th>
 </tr>
 <tr>
 </tr>
@@ -155,6 +161,10 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %} </th>
 
+<th>{{ form.tipo_de_ala}}
+            {% for error in form.tipo_de_ala.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %} </th>
 </tr>
 <tr>
 </tr>
