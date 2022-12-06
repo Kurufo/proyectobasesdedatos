@@ -1,0 +1,37 @@
+id_ciudad;Ciudad;Region;Localidad
+1;San Bernardo;7;rural
+2;Paine ;7;rural
+3;Colchahua;9;rural
+4;Antofagasta;3;costa
+5;Coquimbo;5;costa
+6;Los Andes;6;rural
+7;Osorno;14;pueblo
+8;Talca;9;ciudad
+9;Huasco;4;rural
+10;Chiloé;14;ciudad
+11;Cabo de Hornos;16;rural
+12;Valdivia;13;rural
+13;Arica;1;rural
+14;Laja;11;rural
+15;Tierra del Fuego;16;rural
+16;Punta Arenas;16;rural
+17;Iquique;2;rural
+18;Copiapó;4;rural
+19;Vallenar;4;rural
+20;Aysén;15;rural
+21;Linares;9;rural
+22;Llanquihue;14;rural
+23;Chile Chico;15;rural
+24;Temuco;12;rural
+25;Atacama ;4;rural
+26;Archipiélado Juan Fernández;6;pueblo
+27;Antártica;16;rural
+28;Tongoy;5;rural
+29;Chañaral;4;rural
+30;Concepción;11;rural
+31;Quillagua;3;oasis
+32;Calama;3;ciudad
+33;Parinacota;1;rural
+34;Toconao;3;rural
+35;Socoroma;1;rural
+36;Tarapacá;2;rural

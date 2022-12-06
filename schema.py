@@ -69,6 +69,27 @@ def eliminar_usuario(username: str):
 
     (psycopg.connect(conninfo=CONN_STRING).execute(query, (username,)).connection.commit())
 
+def obtener_todas_las_aves_de_region(region: str):
+    query = """
+    SELECT DISTINCT dir_foto,
+                    ave.nombre,
+                    hecho_por.username,
+                    ubicacion.region,
+                    ubicacion.nombre
+    FROM aves.ubicacion,
+         aves.visto_en,
+         aves.avistamiento,
+         aves.avistado_en,
+         aves.avistado,
+         aves.ave,
+         aves.hecho_por
+    WHERE ubicacion.nombre=visto_en.nombre
+    AND visto_en.id_avistamiento=avistado_en.id_avistamiento
+    AND avistado_en.id_avistamiento=avistado.id_avistamiento
+    AND avistado.especie=ave.especie
+    AND avistado.id_avistamiento = hecho_por.id_avistamiento
+    AND ubicacion.region = 'Magallanes'
+    """
 
 
 def obtener_todos_los_avistamientos():
